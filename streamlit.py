@@ -140,15 +140,13 @@ def build_comments_df():
     df.post_title = df.post_title.str.replace("Manchester City 0", "Manchester City 1") # Fix score issues
 
     sia = SentimentIntensityAnalyzer()
-    vs = [sia.polarity_scores(comment)['compound'] for comment in df["body"]]
     df["sentiment"] = round(100*df["body"].apply(lambda body: sia.polarity_scores(body)['compound']),1)
     df['title_label'] = df['post_title'].str.split(":").str[1].str.split(" \[").str[0]
     return df
 
 @st.cache
-def build_match_sentiment_df(original_df):
+def build_match_sentiment_df(df):
     """Aggregate the comments at the match level and calculated match aggregations"""
-    df = original_df.copy(deep=True)
 
     MAX_COM_LEN = 250
     most_positive_comment_idx = df[df.body.str.len()<MAX_COM_LEN].groupby(['post_title'])['sentiment'].idxmax()
@@ -220,7 +218,6 @@ if st.checkbox('Weight comments sentiment by their upvotes'):
 
 
 st.altair_chart(match_chart)
-
 
 @st.cache
 def build_redditor_level_df(_df):
