@@ -256,7 +256,7 @@ Similarly, we see that the redditor with worst sentiment score tend to comment m
 **The table below shows the 5 redditors with the worst average sentiment**, all of these users comment in less than 37% of Post-Match threads
 that were wins.
 
-**This doesn't mean these users are toxic. For example, some of them might be using just non-toxic stronger
+**This doesn't mean these users are toxic. For example, some of them might be using stronger
 language which VADER might weight as more negative.**
          """)
 worst_10_redditors = redditor_df[redditor_df["sentiment"] < 0].sort_values('sentiment').head(5)
