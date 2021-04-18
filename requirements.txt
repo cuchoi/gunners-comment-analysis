@@ -2,3 +2,4 @@ altair
 streamlit
 nltk
 pandas
+praw
