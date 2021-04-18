@@ -31,7 +31,7 @@ st.write("""
     How do the users from the subreddit [/r/gunners](http://www.reddit.com/r/gunners)
     react after Arsenal wins and defeats?
 
-    [by /u/cuchoi](www.fernandoi.cl)
+    [by /u/cuchoi](http://www.fernandoi.cl)
 
     ### Motivation
 
