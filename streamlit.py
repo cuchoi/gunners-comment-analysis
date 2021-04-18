@@ -158,7 +158,14 @@ def build_match_sentiment_df(original_df):
     def most_negative_comment(df):
         return df[df.index.isin(most_negative_comment_idx)]
 
+    def weighted_sentiment(group, weight_name="score"):
+        group = group.dropna()
+        w = df.loc[group.index, weight_name].copy()
+        w = w + abs(min(w)) + 1
+        return round((group * w).sum() / w.sum())
+
     match_sentiment = df.groupby('post_title').agg(sentiment=('sentiment', 'mean'),
+                                                   weighted_sentiment=('sentiment', weighted_sentiment),
                                                     match_date=('match_date', 'first'),
                                                     arsenal_score=('arsenal_score', 'first'),
                                                     other_score=('other_score', 'first'),
@@ -193,8 +200,9 @@ st.write("""
          #### Average comment sentiment for each Premier League game
          """)
 st.text("")
-st.altair_chart(alt.Chart(matches_df).mark_bar().encode(
-            x=alt.X('sentiment', axis=alt.Axis(title="Average Sentiment")),
+
+match_chart = alt.Chart(matches_df).mark_bar().encode(
+            x=alt.X('sentiment', axis=alt.Axis(title="Average Sentiment"), scale=alt.Scale(domain=[-35, 55])),
             y=alt.Y('title_label:N', sort=alt.SortField('created_utc'), axis=alt.Axis(title="")),
             color='match_result:N',
             tooltip=['sentiment',
@@ -203,7 +211,15 @@ st.altair_chart(alt.Chart(matches_df).mark_bar().encode(
                      'comment_count']
             ).properties(
                 width=700
-            ))
+            )
+
+if st.checkbox('Weight comments sentiment by their upvotes'):
+    match_chart = match_chart.encode(x=alt.X('weighted_sentiment',
+                                     axis=alt.Axis(title="Weighted Sentiment"),
+                                     scale=alt.Scale(domain=[-35, 55])))
+
+
+st.altair_chart(match_chart)
 
 
 @st.cache
