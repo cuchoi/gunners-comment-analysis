@@ -4,10 +4,16 @@ import altair as alt
 import pickle
 from datetime import datetime
 import nltk
-nltk.download("vader_lexicon")
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from collections import Counter
 from statistics import median
+
+# VADER Setup
+@st.cache
+def download_vader():
+    nltk.download("vader_lexicon")
+
+download_vader()
 
 # Increase the default width of Streamlit
 st.markdown(f"""
