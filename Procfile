@@ -1,1 +1,1 @@
-web: sh heruoku_setup.sh && streamlit run streamlit.py
+web: sh heroku_setup.sh && streamlit run streamlit.py
