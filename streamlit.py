@@ -31,6 +31,8 @@ st.write("""
     How do the users from the subreddit [/r/gunners](http://www.reddit.com/r/gunners)
     react after Arsenal wins and defeats?
 
+    [by /u/cuchoi](www.fernandoi.cl)
+
     ### Motivation
 
     For me, *Post Match Threads* have always felt a bit over reactive: We win and we
